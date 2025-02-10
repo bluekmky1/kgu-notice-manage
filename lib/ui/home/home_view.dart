@@ -52,7 +52,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
           alignment: Alignment.centerLeft,
           child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
-              final bool isSmallMobile = constraints.maxWidth < 480;
+              final bool isSmallMobile = constraints.maxWidth < 550;
 
               if (isSmallMobile) {
                 return const Text(
@@ -212,7 +212,7 @@ class NoticeManageHeader extends ConsumerWidget {
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        final bool isSmallMobile = constraints.maxWidth < 480;
+        final bool isSmallMobile = constraints.maxWidth < 550;
 
         if (isSmallMobile) {
           return Container(
@@ -225,111 +225,114 @@ class NoticeManageHeader extends ConsumerWidget {
                 ),
               ),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                TextButton(
-                  onPressed: state.selectedNotices.isNotEmpty
-                      ? viewModel.clearSelectedNotices
-                      : null,
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 24,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    backgroundColor: state.selectedNotices.isNotEmpty
-                        ? managerColors.error
-                        : managerColors.gray40,
-                    foregroundColor: managerColors.white,
-                  ),
-                  child: const Row(
-                    children: <Widget>[
-                      Text(
-                        '선택된 공지 모두 지우기',
-                        style: Typo.p16b,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextButton(
-                  onPressed: () {
-                    viewModel.toggleAddingNotice(
-                      isAddingNotice: true,
-                    );
-                    if (state.notices.isNotEmpty && !state.isAddingNotice) {
-                      scrollController.animateTo(
-                        scrollController.position.maxScrollExtent + 420,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: <Widget>[
+                  const SizedBox(height: 12),
+                  TextButton(
+                    onPressed: () {
+                      viewModel.toggleAddingNotice(
+                        isAddingNotice: true,
                       );
-                    }
-                  },
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 24,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    backgroundColor: managerColors.main,
-                    foregroundColor: managerColors.white,
-                  ),
-                  child: const Row(
-                    children: <Widget>[
-                      Text(
-                        '공지사항 추가',
-                        style: Typo.p16b,
+                      if (state.notices.isNotEmpty && !state.isAddingNotice) {
+                        scrollController.animateTo(
+                          scrollController.position.maxScrollExtent + 420,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                      }
+                    },
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 16,
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextButton(
-                  onPressed: state.selectedNotices.isNotEmpty &&
-                          state.editingNoticeId.isEmpty &&
-                          !state.isAddingNotice
-                      ? () {
-                          _showKakaoFormatDialog(
-                            context: context,
-                            notices: state.notices,
-                            managerColors: managerColors,
-                          );
-                        }
-                      : null,
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 24,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: BorderSide(
-                        color: state.selectedNotices.isNotEmpty &&
-                                state.editingNoticeId.isEmpty &&
-                                !state.isAddingNotice
-                            ? managerColors.main
-                            : managerColors.gray40,
-                        width: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
+                      backgroundColor: managerColors.main,
+                      foregroundColor: managerColors.white,
                     ),
-                    backgroundColor: managerColors.white,
-                    foregroundColor: managerColors.main,
+                    child: const Row(
+                      children: <Widget>[
+                        Text(
+                          '공지사항 추가',
+                          style: Typo.p16b,
+                        ),
+                      ],
+                    ),
                   ),
-                  child: const Row(
-                    children: <Widget>[
-                      Text(
-                        '카톡 형식 출력',
-                        style: Typo.p16b,
+                  const SizedBox(width: 16),
+                  TextButton(
+                    onPressed: state.selectedNotices.isNotEmpty &&
+                            state.editingNoticeId.isEmpty &&
+                            !state.isAddingNotice
+                        ? () {
+                            _showKakaoFormatDialog(
+                              context: context,
+                              notices: state.notices,
+                              managerColors: managerColors,
+                            );
+                          }
+                        : null,
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 16,
                       ),
-                    ],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: BorderSide(
+                          color: state.selectedNotices.isNotEmpty &&
+                                  state.editingNoticeId.isEmpty &&
+                                  !state.isAddingNotice
+                              ? managerColors.main
+                              : managerColors.gray40,
+                          width: 2,
+                        ),
+                      ),
+                      backgroundColor: managerColors.white,
+                      foregroundColor: managerColors.main,
+                    ),
+                    child: const Row(
+                      children: <Widget>[
+                        Text(
+                          '카톡 형식 출력',
+                          style: Typo.p16b,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(width: 16),
+                  TextButton(
+                    onPressed: state.selectedNotices.isNotEmpty
+                        ? viewModel.clearSelectedNotices
+                        : null,
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 16,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      backgroundColor: state.selectedNotices.isNotEmpty
+                          ? managerColors.error
+                          : managerColors.gray40,
+                      foregroundColor: managerColors.white,
+                    ),
+                    child: const Row(
+                      children: <Widget>[
+                        Text(
+                          '선택된 공지 모두 지우기',
+                          style: Typo.p16b,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         } else {
