@@ -79,6 +79,23 @@ class HomeViewModel extends StateNotifier<HomeState> {
     );
   }
 
+  Future<void> clearSelectedNotices() async {
+    final List<NoticeModel> newNotices = state.notices
+        .where((NoticeModel e) => !state.selectedNotices.contains(e))
+        .toList();
+
+    await _storageService.setString(
+      key: StorageKey.notices,
+      value: jsonEncode(
+          newNotices.map((NoticeModel notice) => notice.toJson()).toList()),
+    );
+
+    state = state.copyWith(
+      selectedNotices: const <NoticeModel>[],
+      notices: newNotices,
+    );
+  }
+
   void toggleSelectedNotice({required NoticeModel notice}) {
     state = state.copyWith(
       selectedNotices: state.selectedNotices.contains(notice)

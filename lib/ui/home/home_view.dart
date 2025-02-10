@@ -19,6 +19,8 @@ class HomeView extends ConsumerStatefulWidget {
 }
 
 class _HomeViewState extends ConsumerState<HomeView> {
+  ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +28,12 @@ class _HomeViewState extends ConsumerState<HomeView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(homeViewModelProvider.notifier).init();
     });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -63,7 +71,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
       ),
       body: Column(
         children: <Widget>[
-          const NoticeManageHeader(),
+          NoticeManageHeader(scrollController: scrollController),
           Expanded(
             child: RefreshIndicator(
               backgroundColor: managerColors.white,
@@ -73,6 +81,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
               },
               color: managerColors.main,
               child: SingleChildScrollView(
+                controller: scrollController,
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: <Widget>[
@@ -187,8 +196,11 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
 class NoticeManageHeader extends ConsumerWidget {
   const NoticeManageHeader({
+    required this.scrollController,
     super.key,
   });
+
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -216,10 +228,44 @@ class NoticeManageHeader extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 TextButton(
+                  onPressed: state.selectedNotices.isNotEmpty
+                      ? viewModel.clearSelectedNotices
+                      : null,
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 24,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    backgroundColor: state.selectedNotices.isNotEmpty
+                        ? managerColors.error
+                        : managerColors.gray40,
+                    foregroundColor: managerColors.white,
+                  ),
+                  child: const Row(
+                    children: <Widget>[
+                      Text(
+                        '선택된 공지 모두 지우기',
+                        style: Typo.p16b,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextButton(
                   onPressed: () {
                     viewModel.toggleAddingNotice(
                       isAddingNotice: true,
                     );
+                    if (state.notices.isNotEmpty && !state.isAddingNotice) {
+                      scrollController.animateTo(
+                        scrollController.position.maxScrollExtent + 420,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    }
                   },
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
@@ -303,9 +349,41 @@ class NoticeManageHeader extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 TextButton(
+                  onPressed: state.selectedNotices.isNotEmpty
+                      ? viewModel.clearSelectedNotices
+                      : null,
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 20,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    backgroundColor: state.selectedNotices.isNotEmpty
+                        ? managerColors.error
+                        : managerColors.gray40,
+                    foregroundColor: managerColors.white,
+                  ),
+                  child: const Row(
+                    children: <Widget>[
+                      Text(
+                        '선택된 공지 모두 지우기',
+                        style: Typo.p16b,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 16),
+                TextButton(
                   onPressed: () {
                     viewModel.toggleAddingNotice(
                       isAddingNotice: true,
+                    );
+                    scrollController.animateTo(
+                      scrollController.position.maxScrollExtent,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
                     );
                   },
                   style: TextButton.styleFrom(
