@@ -423,7 +423,7 @@ void _showKakaoFormatDialog({
             ),
             Container(
               constraints: const BoxConstraints(
-                maxHeight: 500,
+                maxHeight: 300,
                 minWidth: 300,
               ),
               alignment: Alignment.topLeft,
@@ -461,8 +461,7 @@ String _generateKakaoFormat(List<NoticeModel> notices, String major) {
   // 전공에 따른 이모지 매핑
   final Map<String, String> majorEmojis = <String, String>{
     '경영학전공': '💙',
-    '회계세무전공': '💛',
-    'K-비즈니스전공': '💚',
+    '통합': '💙',
   };
 
   final String emoji = majorEmojis[major] ?? '💙';
