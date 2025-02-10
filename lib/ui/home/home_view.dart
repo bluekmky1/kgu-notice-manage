@@ -75,6 +75,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
           Expanded(
             child: RefreshIndicator(
               backgroundColor: managerColors.white,
+              displacement: 35,
               onRefresh: () async {
                 await Future<void>.delayed(const Duration(seconds: 1));
                 await viewModel.init();
