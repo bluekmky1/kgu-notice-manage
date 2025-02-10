@@ -353,33 +353,6 @@ class NoticeManageHeader extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 TextButton(
-                  onPressed: state.selectedNotices.isNotEmpty
-                      ? viewModel.clearSelectedNotices
-                      : null,
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 20,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    backgroundColor: state.selectedNotices.isNotEmpty
-                        ? managerColors.error
-                        : managerColors.gray40,
-                    foregroundColor: managerColors.white,
-                  ),
-                  child: const Row(
-                    children: <Widget>[
-                      Text(
-                        '선택된 공지 모두 지우기',
-                        style: Typo.p16b,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 16),
-                TextButton(
                   onPressed: () {
                     viewModel.toggleAddingNotice(
                       isAddingNotice: true,
@@ -437,6 +410,33 @@ class NoticeManageHeader extends ConsumerWidget {
                   child: const Text(
                     '카톡 형식 출력',
                     style: Typo.p16b,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                TextButton(
+                  onPressed: state.selectedNotices.isNotEmpty
+                      ? viewModel.clearSelectedNotices
+                      : null,
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 20,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    backgroundColor: state.selectedNotices.isNotEmpty
+                        ? managerColors.error
+                        : managerColors.gray40,
+                    foregroundColor: managerColors.white,
+                  ),
+                  child: const Row(
+                    children: <Widget>[
+                      Text(
+                        '선택된 공지 모두 지우기',
+                        style: Typo.p16b,
+                      ),
+                    ],
                   ),
                 ),
               ],
