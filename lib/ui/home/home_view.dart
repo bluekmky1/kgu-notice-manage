@@ -65,104 +65,117 @@ class _HomeViewState extends ConsumerState<HomeView> {
         children: <Widget>[
           const NoticeManageHeader(),
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  const Row(),
-                  Container(
-                    constraints: const BoxConstraints(
-                      maxWidth: 1300,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        16,
-                        32,
-                        16,
-                        0,
+            child: RefreshIndicator(
+              backgroundColor: managerColors.white,
+              onRefresh: () async {
+                await Future<void>.delayed(const Duration(seconds: 1));
+                await viewModel.init();
+              },
+              color: managerColors.main,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: <Widget>[
+                    const Row(),
+                    Container(
+                      constraints: const BoxConstraints(
+                        maxWidth: 1300,
                       ),
-                      child: Wrap(
-                        spacing: 16,
-                        runSpacing: 16,
-                        children: <Widget>[
-                          if (state.noticesLoadingStatus ==
-                              LoadingStatus.loading)
-                            const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          if (state.notices.isEmpty &&
-                              !state.isAddingNotice &&
-                              state.noticesLoadingStatus ==
-                                  LoadingStatus.success)
-                            const Padding(
-                              padding: EdgeInsets.only(top: 64),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    '변환할 공지사항이 없습니다.\n 공지사항을 추가해주세요.',
-                                    textAlign: TextAlign.center,
-                                    style: Typo.p16r,
-                                  ),
-                                ],
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          16,
+                          32,
+                          16,
+                          0,
+                        ),
+                        child: Wrap(
+                          spacing: 16,
+                          runSpacing: 16,
+                          children: <Widget>[
+                            if (state.noticesLoadingStatus ==
+                                LoadingStatus.loading)
+                              Center(
+                                child: CircularProgressIndicator(
+                                  color: managerColors.main,
+                                ),
                               ),
-                            ),
-                          if (state.noticesLoadingStatus ==
-                              LoadingStatus.success)
-                            ...List<Widget>.generate(
-                              state.notices.length,
-                              (int index) {
-                                if (state.editingNoticeId ==
-                                    state.notices[index].id) {
-                                  return EditingCard(
+                            if (state.notices.isEmpty &&
+                                !state.isAddingNotice &&
+                                state.noticesLoadingStatus ==
+                                    LoadingStatus.success)
+                              const Padding(
+                                padding: EdgeInsets.only(top: 64),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      '변환할 공지사항이 없습니다.\n 공지사항을 추가해주세요.',
+                                      textAlign: TextAlign.center,
+                                      style: Typo.p16r,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            if (state.noticesLoadingStatus ==
+                                LoadingStatus.success)
+                              ...List<Widget>.generate(
+                                state.notices.length,
+                                (int index) {
+                                  if (state.editingNoticeId ==
+                                      state.notices[index].id) {
+                                    return EditingCard(
+                                      notice: state.notices[index],
+                                    );
+                                  }
+
+                                  return NoticeCard(
                                     notice: state.notices[index],
                                   );
-                                }
-
-                                return NoticeCard(
-                                  notice: state.notices[index],
-                                );
-                              },
-                            ),
-                          if (state.isAddingNotice &&
-                              state.noticesLoadingStatus ==
-                                  LoadingStatus.success)
-                            const WritingCard(),
-                          if (state.noticesLoadingStatus == LoadingStatus.error)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 64),
-                              child: Column(
-                                children: <Widget>[
-                                  const Row(),
-                                  const Text(
-                                    '공지사항을 불러오는데 실패했습니다.\n 다시 시도해주세요.',
-                                    textAlign: TextAlign.center,
-                                    style: Typo.p16r,
-                                  ),
-                                  const SizedBox(height: 32),
-                                  TextButton(
-                                    onPressed: viewModel.init,
-                                    style: TextButton.styleFrom(
-                                      backgroundColor: managerColors.main,
-                                      foregroundColor: managerColors.white,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 24,
-                                        vertical: 20,
-                                      ),
-                                    ),
-                                    child: const Text('다시 시도'),
-                                  ),
-                                ],
+                                },
                               ),
-                            ),
-                        ],
+                            if (state.isAddingNotice &&
+                                state.noticesLoadingStatus ==
+                                    LoadingStatus.success)
+                              const WritingCard(),
+                            if (state.noticesLoadingStatus ==
+                                LoadingStatus.error)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 64),
+                                child: Column(
+                                  children: <Widget>[
+                                    const Row(),
+                                    const Text(
+                                      '공지사항을 불러오는데 실패했습니다.\n 다시 시도해주세요.',
+                                      textAlign: TextAlign.center,
+                                      style: Typo.p16r,
+                                    ),
+                                    const SizedBox(height: 32),
+                                    TextButton(
+                                      onPressed: viewModel.init,
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: managerColors.main,
+                                        foregroundColor: managerColors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 24,
+                                          vertical: 20,
+                                        ),
+                                      ),
+                                      child: const Text('다시 시도'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 120),
-                ],
+                    const SizedBox(height: 120),
+                  ],
+                ),
               ),
             ),
           ),
