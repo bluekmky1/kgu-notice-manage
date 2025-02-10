@@ -28,23 +28,35 @@ class HomeViewModel extends StateNotifier<HomeState> {
     state = state.copyWith(
       noticesLoadingStatus: LoadingStatus.loading,
     );
+    try {
+      final String? noticesJson =
+          await _storageService.getString(key: StorageKey.notices);
 
-    final String? noticesJson =
-        await _storageService.getString(key: StorageKey.notices);
+      if (noticesJson != null) {
+        final List<dynamic> decoded = jsonDecode(noticesJson) as List<dynamic>;
+        final List<NoticeModel> notices = decoded
+            .map((dynamic item) =>
+                NoticeModel.fromJson(item as Map<String, dynamic>))
+            .toList();
+        state = state.copyWith(
+          notices: notices,
+          noticesLoadingStatus: LoadingStatus.success,
+        );
+      } else {
+        await _storageService.setString(
+          key: StorageKey.notices,
+          value: '[]',
+        );
 
-    if (noticesJson != null) {
-      final List<dynamic> decoded = jsonDecode(noticesJson) as List<dynamic>;
-      final List<NoticeModel> notices = decoded
-          .map((dynamic item) =>
-              NoticeModel.fromJson(item as Map<String, dynamic>))
-          .toList();
-      state = state.copyWith(
-        notices: notices,
-        noticesLoadingStatus: LoadingStatus.success,
-      );
-    } else {
+        state = state.copyWith(
+          noticesLoadingStatus: LoadingStatus.success,
+          notices: const <NoticeModel>[],
+        );
+      }
+    } on Exception catch (e) {
       state = state.copyWith(
         noticesLoadingStatus: LoadingStatus.error,
+        storageErrorMessage: e.toString(),
       );
     }
   }

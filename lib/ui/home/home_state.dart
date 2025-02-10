@@ -12,6 +12,7 @@ class HomeState extends Equatable {
   final String editingNoticeId;
   final String addingErrorMessage;
   final String editingErrorMessage;
+  final String storageErrorMessage;
 
   const HomeState({
     required this.noticesLoadingStatus,
@@ -21,6 +22,7 @@ class HomeState extends Equatable {
     required this.editingNoticeId,
     required this.addingErrorMessage,
     required this.editingErrorMessage,
+    required this.storageErrorMessage,
   });
 
   HomeState.init()
@@ -30,7 +32,8 @@ class HomeState extends Equatable {
         isAddingNotice = false,
         editingNoticeId = '',
         addingErrorMessage = '',
-        editingErrorMessage = '';
+        editingErrorMessage = '',
+        storageErrorMessage = '';
 
   HomeState copyWith({
     LoadingStatus? noticesLoadingStatus,
@@ -40,6 +43,7 @@ class HomeState extends Equatable {
     String? editingNoticeId,
     String? addingErrorMessage,
     String? editingErrorMessage,
+    String? storageErrorMessage,
   }) =>
       HomeState(
         noticesLoadingStatus: noticesLoadingStatus ?? this.noticesLoadingStatus,
@@ -49,6 +53,7 @@ class HomeState extends Equatable {
         editingNoticeId: editingNoticeId ?? this.editingNoticeId,
         addingErrorMessage: addingErrorMessage ?? this.addingErrorMessage,
         editingErrorMessage: editingErrorMessage ?? this.editingErrorMessage,
+        storageErrorMessage: storageErrorMessage ?? this.storageErrorMessage,
       );
 
   @override
@@ -60,5 +65,6 @@ class HomeState extends Equatable {
         editingNoticeId,
         addingErrorMessage,
         editingErrorMessage,
+        storageErrorMessage,
       ];
 }
