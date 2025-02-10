@@ -6,59 +6,39 @@ class Typo {
   const Typo._();
 
   // Header
-  static const TextStyle t40sb = TextStyle(
-    fontSize: 40,
-    fontWeight: FontWeight.w600,
-    height: 1.6,
-    leadingDistribution: TextLeadingDistribution.even,
-    fontFamily: 'SUIT',
-  );
-
-  static const TextStyle st32sb = TextStyle(
-    fontSize: 32,
-    fontWeight: FontWeight.w600,
-    height: 1.6,
-    leadingDistribution: TextLeadingDistribution.even,
-    fontFamily: 'SUIT',
-  );
-
-  static const TextStyle st32r = TextStyle(
-    fontSize: 32,
-    fontWeight: FontWeight.w400,
-    height: 1.6,
-    leadingDistribution: TextLeadingDistribution.even,
-    fontFamily: 'SUIT',
-  );
-
-  static const TextStyle h24Sb = TextStyle(
+  static const TextStyle p24b = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.w600,
-    height: 1.6,
-    leadingDistribution: TextLeadingDistribution.even,
-    fontFamily: 'SUIT',
+    fontFamily: 'Pretendard',
   );
 
-  static const TextStyle h24r = TextStyle(
-    fontSize: 24,
-    fontWeight: FontWeight.w400,
-    height: 1.6,
-    leadingDistribution: TextLeadingDistribution.even,
-    fontFamily: 'SUIT',
+  static const TextStyle p20b = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    fontFamily: 'Pretendard',
   );
 
-  static const TextStyle b16r = TextStyle(
+  static const TextStyle p16b = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    fontFamily: 'Pretendard',
+  );
+
+  static const TextStyle p14b = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    fontFamily: 'Pretendard',
+  );
+
+  static const TextStyle p16r = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w400,
-    height: 1.6,
-    leadingDistribution: TextLeadingDistribution.even,
-    fontFamily: 'SUIT',
+    fontFamily: 'Pretendard',
   );
 
-  static const TextStyle c12r = TextStyle(
-    fontSize: 12,
+  static const TextStyle p14r = TextStyle(
+    fontSize: 14,
     fontWeight: FontWeight.w400,
-    height: 1.6,
-    leadingDistribution: TextLeadingDistribution.even,
-    fontFamily: 'SUIT',
+    fontFamily: 'Pretendard',
   );
 }

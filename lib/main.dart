@@ -26,7 +26,7 @@ class _MainAppState extends ConsumerState<MainApp> {
   @override
   Widget build(BuildContext context) => MaterialApp.router(
         routerConfig: ref.watch(appRouterProvider).router,
-        title: '경기대학교 공지 관리 페이지',
+        title: '경영학전공 공지 요약 생성기',
         theme: ThemeData(
           extensions: const <ThemeExtension<dynamic>>[
             NoticeManagerColorTheme.light,
@@ -39,6 +39,11 @@ class _MainAppState extends ConsumerState<MainApp> {
             scrolledUnderElevation: 0,
           ),
           scaffoldBackgroundColor: NoticeManagerColors.background,
+          textSelectionTheme: TextSelectionThemeData(
+            cursorColor: NoticeManagerColors.main,
+            selectionColor: NoticeManagerColors.main.withAlpha(100),
+            selectionHandleColor: NoticeManagerColors.main,
+          ),
         ),
       );
 }
