@@ -160,7 +160,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 100),
                 ],
               ),
             ),
