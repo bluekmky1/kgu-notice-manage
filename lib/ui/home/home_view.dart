@@ -35,6 +35,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     final HomeState state = ref.watch(homeViewModelProvider);
     final HomeViewModel viewModel = ref.watch(homeViewModelProvider.notifier);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Container(
           constraints: const BoxConstraints(
@@ -160,6 +161,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 120),
                 ],
               ),
             ),
