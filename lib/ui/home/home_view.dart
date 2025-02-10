@@ -190,9 +190,6 @@ class NoticeManageHeader extends ConsumerWidget {
         if (isSmallMobile) {
           return Container(
             padding: const EdgeInsets.all(16),
-            constraints: const BoxConstraints(
-              maxHeight: 160,
-            ),
             decoration: BoxDecoration(
               color: managerColors.background,
               border: Border(
