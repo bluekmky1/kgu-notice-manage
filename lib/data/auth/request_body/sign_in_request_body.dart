@@ -1,16 +1,16 @@
-import 'package:json_annotation/json_annotation.dart';
+// import 'package:json_annotation/json_annotation.dart';
 
-part 'generated/sign_in_request_body.g.dart';
+// part 'generated/sign_in_request_body.g.dart';
 
-@JsonSerializable()
-class SignInRequestBody {
-  final String email;
-  final String password;
+// @JsonSerializable()
+// class SignInRequestBody {
+//   final String email;
+//   final String password;
 
-  SignInRequestBody({
-    required this.email,
-    required this.password,
-  });
+//   SignInRequestBody({
+//     required this.email,
+//     required this.password,
+//   });
 
-  Map<String, dynamic> toJson() => _$SignInRequestBodyToJson(this);
-}
+//   Map<String, dynamic> toJson() => _$SignInRequestBodyToJson(this);
+// }
